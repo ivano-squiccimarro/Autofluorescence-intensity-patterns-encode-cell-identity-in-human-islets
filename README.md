@@ -1,2 +1,2 @@
 # Autofluorescence-intensity-patterns-encode-cell-identity-in-human-islets
-Label-free $\alpha$ and $\beta$ cell identification in human islets using LTP-based Machine Learning. Achieves $AUC=0.92$ using endogenous autofluorescence patterns.
+Label-Free Islet Cell Discrimination via Intracellular AutofluorescenceOverviewThis repository contains the implementation for a non-destructive framework to identify $\alpha$- and $\beta$-cells within intact human islets. By leveraging Local Ternary Pattern (LTP) descriptors and morphological features, this method discriminates cell types using standard imaging configurations, eliminating the need for destructive labeling or specialized FLIM instrumentation.
