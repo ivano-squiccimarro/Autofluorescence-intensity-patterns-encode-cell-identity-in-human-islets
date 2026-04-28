@@ -66,7 +66,8 @@ cd Autofluorescence-intensity-patterns-encode-cell-identity-in-human-islets
 **2. Create a virtual environment:**
 ```text
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+.\venv\Scripts\Activate.ps1
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 ```
 **3. Install dependencies:**
 ```text
