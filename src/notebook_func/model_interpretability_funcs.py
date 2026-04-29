@@ -1383,7 +1383,7 @@ custom_shap_cmap = LinearSegmentedColormap.from_list(
 def compute_and_save_shap_data(
     model_name, 
     seeds, 
-    tech_names,    # <--- 1. ADDED THIS PARAMETER
+    tech_names,
     save_dir, 
     n_samples_per_seed=255
 ):
