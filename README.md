@@ -1,4 +1,4 @@
-# Autofluorescence-Based Islet Identification & Real-Time Engine
+# Autofluorescence intensity patterns encode α/β cell identity in human islets
 
 ## Introduction
 Understanding the behavior of Alpha and Beta cells within intact human islets is essential for elucidating mechanisms of metabolic control in Diabetes. Current cell-type identification strategies rely on destructive labeling or on advanced imaging modalities such as Fluorescence Lifetime Imaging Microscopy (FLIM), which provide rich metabolic information but require specialized instrumentation and acquisition protocols.
@@ -22,29 +22,32 @@ Interpretability analyses demonstrate that discrimination is driven predominantl
 The codebase is strictly separated into frontend execution (Jupyter Notebooks) and backend logic (`src/`), ensuring clean, readable, and reproducible experiments.
 
 ```text
-├── config/
+├── config
 │   ├── __init__.py
-│   ├── pipeline_configurations.py     
-│   └── presentation_config.py   
-├── data/
-│   └── input/
-│       ├── numpy files/
-│       │   └── 0000_alpha.npy .....
+│   ├── pipeline_configuration.py
+│   ├── presentation_config.py
+│   └── speed_benchmark_config.py
+├── data
+│   └── input
 │       ├── db_files.csv
 │       └── Fabio_rowstodrop.csv
-├── Engines/                            
-├── notebooks/                         
-│   └── Analysis_of_Results_and_Graph_and_Tables_Generator.ipynb
-├── src/
-│   ├── notebook_func/
-│   │   ├── augmentation_analysis.py
+├── notebook
+│   └── Analysis_of Results_and_Graph_and_Tables_Generator.ipynb
+├── src
+│   ├── notebook_func
+│   │   ├── __init__.py
+│   │   ├── augmentations_analysis.py
 │   │   ├── cross_dataset_analysis.py
+│   │   ├── eda_visualization_functions.py
+│   │   ├── hyperparameter_models_table.py
 │   │   ├── model_interpretability_funcs.py
-│   │   └── realtime_performance.py
+│   │   ├── model_performance_evaluation.py
+│   │   ├── realtime_performance.py
+│   │   └── results_retrieval.py
 │   ├── __init__.py
 │   ├── bayesian_hyperparameter_search_functions.py
 │   ├── dataset_augmentation_functions.py
-│   ├── feature_extraction_functions.py    
+│   ├── feature_extraction_functions.py
 │   ├── final_training_and_testing_evaluation_functions.py
 │   ├── from_images_collection_to_dataframe.py
 │   ├── Original_RealTimeFrameClassification.py
@@ -52,10 +55,10 @@ The codebase is strictly separated into frontend execution (Jupyter Notebooks) a
 │   ├── pipeline_seed.py
 │   ├── stacking_ensemble_functions.py
 │   └── voting_ensemble_functions.py
+├── .gitignore
 ├── main.py
-├── README.md
-└── requirements.txt
-```
+├── requirements.txt
+└── smart_tree_creator.py```
 
 ## 🚀 Installation & Setup
 **1. Clone the repository:**
