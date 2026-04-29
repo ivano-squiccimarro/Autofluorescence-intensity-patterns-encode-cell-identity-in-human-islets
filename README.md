@@ -58,7 +58,8 @@ The codebase is strictly separated into frontend execution (Jupyter Notebooks) a
 ├── .gitignore
 ├── main.py
 ├── requirements.txt
-└── smart_tree_creator.py```
+└── smart_tree_creator.py
+```
 
 ## 🚀 Installation & Setup
 **1. Clone the repository:**
