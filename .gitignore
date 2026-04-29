@@ -1,0 +1,17 @@
+# 1. Raw Input Data (Zenodo)
+data/input/numpy files/
+
+# 2. Trained Models & Assets (Zenodo)
+Engines/
+
+# 3. Experimental Results (Zenodo)
+Dataset++/
+Dataset++_No_Aug/
+Dataset/
+Dataset_SMOTE/
+
+# 4. Local Python Clutter
+venv/
+__pycache__/
+.ipynb_checkpoints/
+.DS_Stores

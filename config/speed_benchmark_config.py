@@ -1,0 +1,9 @@
+# BATCH SCALABILITY ANALYSIS
+N_AUG       =10
+N_WARMUP    =5
+N_REP       =50
+
+# OldvsNEW RealTIme Engine 
+BENCH_N_REP         =5
+BENCH_N_FRAMES      =500
+BENCH_N_STAB_FRAMES = 200
