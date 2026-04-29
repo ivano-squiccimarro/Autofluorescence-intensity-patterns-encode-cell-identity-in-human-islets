@@ -8,7 +8,7 @@ This project demonstrates that structured intracellular intensity patterns deriv
 Interpretability analyses demonstrate that discrimination is driven predominantly by fine-scale intracellular intensity organization rather than global morphology. In the spectral window employed, cytoplasmic autofluorescence is prominently shaped by lipofuscin-rich granules. Consistent with higher lipofuscin accumulation in Beta cells, the dominant features identified here likely reflect differences in granule abundance and spatial organization between endocrine cell types. This provides a biologically grounded and fully non-destructive framework for the identification of pancreatic islet cell types.
 
 ## 🧬 Project Highlights
-* **Non-Destructive Discrimination (AUC = 0.92):** Surpasses reported benchmarks by identifying endogenous intensity patterns that encode sufficient structural information for reliable $\alpha$/$\beta$ discrimination, operating entirely independently of external patient-linked metadata. 
+* **Non-Destructive Discrimination (AUC = 0.92):** Surpasses reported benchmarks by identifying endogenous intensity patterns that encode sufficient structural information for reliable alpha/beta discrimination, operating entirely independently of external patient-linked metadata. 
   
 * **Robustness to common Geometric Variations:** The classification pipeline is specifically engineered to remain robust against rotation and mirroring, the most frequent geometric transformations encountered during microscopy acquisition. Stability analysis confirms that the use of rotation-invariant descriptors ensures reliable performance regardless of the cell's orientation or lateral flip.
 
@@ -76,7 +76,7 @@ To keep this repository lightweight, the raw image data and pre-trained model as
 └── Dataset++/                 <-- Extract 'experimental_results.zip' here (optional)
 ```
 
-🛠️ Installation & Execution
+## 🛠️ Installation & Execution
 **1. Clone the repository:**
 
 ```text
