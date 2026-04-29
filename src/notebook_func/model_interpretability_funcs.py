@@ -39,19 +39,34 @@ from config.presentation_config import (
 # ________________________________________________________________________
 # Helpers
 
-def load_data_for_seed(folder, seed, data_type='test'):
-    """Helper to load data (X and y) for a given seed."""
+def load_data_for_seed(folder, seed, data_type='test', feature_names=None):
+    """
+    Loads data and RESTORES column names using the explicitly passed feature_names.
+    """
+    import joblib
+    import numpy as np
+    import pandas as pd
+    
     try:
         path_segment = "test/test_scaled.pkl" if data_type == 'test' else "train/global_train_augmented_and_scaled.pkl"
-        data_path = folder/ f"Results_{seed}/Datasets/Training_Test_Splits/Global_Data/{path_segment}"
+        data_path = folder / f"Results_{seed}/Datasets/Training_Test_Splits/Global_Data/{path_segment}"
 
         df = joblib.load(data_path)
         X = df.drop(columns=['label'])
         y = np.array(df['label'].tolist())
+
+        # FIX: Check if columns are missing names, and map them using the provided list
+        if isinstance(X.columns, pd.RangeIndex) or (len(X.columns) > 0 and isinstance(X.columns[0], int)):
+            if feature_names is not None and len(X.columns) == len(feature_names):
+                X.columns = feature_names
+            else:
+                print(f"⚠️ Warning: Column mismatch in seed {seed}. Data={len(X.columns)}, Names={len(feature_names) if feature_names else 'None provided'}")
+        
         return X, y
     except Exception as e:
         print(f"ERROR: Could not load {data_type} set for seed {seed}. Error: {e}")
         return None, None
+    
 
 def load_data_raw(seed, model_name):
     """
@@ -227,58 +242,6 @@ def get_top_n_importance_df(feature_names, model_name, seeds, load_data_fn, resu
     return top_n_df
 
 
-# def analyze_permutation_importance_across_seeds(feature_names, model_name, folder_name, seeds, top_n=5, n_repeats=10, plot_f=True, save_dir=None):
-#     """
-#     Calculates permutation importance, aggregates, plots, and returns top features.
-#     Added: save_dir argument to pass down to plotting function.
-#     """
-#     print("\n" + "="*80 + "\n--- ANALYSIS: Permutation Importance (Aggregated Across All Seeds) ---\n" + "="*80)
-
-#     all_perm_importances = []
-#     for seed in tqdm(seeds, desc=f"Calculating Permutation Importance for {model_name}"):
-#         X_test_df, y_test = load_data_for_seed(folder_name, seed, data_type='test')
-#         if X_test_df is None: continue
-
-#         try:
-#             model_path = RESULTS_ROOT / f"Results_{seed}/Results/Final_Results/Test_Results/{model_name}_final_model.pkl"
-#             model = joblib.load(model_path)
-
-#             result = permutation_importance(model, X_test_df.values, y_test, n_repeats=n_repeats, random_state=seed, n_jobs=-1, scoring='roc_auc')
-#             all_perm_importances.append(result.importances_mean)
-#         except Exception as e:
-#             print(f"Could not calculate permutation importance for seed {seed}. Error: {e}")
-
-#     if not all_perm_importances:
-#         print("No permutation importance results to plot.")
-#         return []
-
-#     # --- Aggregation ---
-#     perm_matrix = np.array(all_perm_importances)
-#     perm_importance_df = pd.DataFrame({
-#         'mean_importance': perm_matrix.mean(axis=0),
-#         'std_importance': perm_matrix.std(axis=0)
-#     }, index=feature_names)
-    
-#     # --- New Logic: Select Top N Features for Plotting ---
-#     top_n_perm_importance_df = perm_importance_df.sort_values(
-#         by='mean_importance', 
-#         ascending=False
-#     ).head(top_n)
-
-#     # Pass ONLY the top_n DataFrame to the plotting function
-#     if plot_f:
-#         # Construct save path if directory provided
-#         save_path = save_dir / f"{model_name}_Permutation_Importance_Top{top_n}.png" if save_dir else None
-        
-#         plot_feature_importance(
-#             top_n_perm_importance_df, 
-#             model_name, 
-#             title_suffix=f"Permutation Importance (Top {top_n} Mean AUC drop across seeds)",
-#             save_path=save_path
-#         )
-
-#     return top_n_perm_importance_df
-
 def analyze_permutation_importance_across_seeds(
     tech_names, 
     tech_to_pub_map, 
@@ -296,7 +259,7 @@ def analyze_permutation_importance_across_seeds(
 
     all_perm_importances = []
     for seed in tqdm(seeds, desc="Processing Seeds"):
-        X_test, y_test = load_data_for_seed(folder_name, seed, data_type='test')
+        X_test, y_test = load_data_for_seed(folder_name, seed, data_type='test', feature_names=tech_names)
         model_path = folder_name / f"Results_{seed}/Results/Final_Results/Test_Results/{model_name}_final_model.pkl"
         
         if X_test is None or not model_path.exists():
@@ -1417,10 +1380,10 @@ custom_shap_cmap = LinearSegmentedColormap.from_list(
     [alpha_color, mid_color, beta_color]
 )
 
-
 def compute_and_save_shap_data(
     model_name, 
     seeds, 
+    tech_names,    # <--- 1. ADDED THIS PARAMETER
     save_dir, 
     n_samples_per_seed=255
 ):
@@ -1453,9 +1416,8 @@ def compute_and_save_shap_data(
     X_list = []
     
     for seed in tqdm(seeds, desc="SHAP Computation"):
-        # Load Model & Data using your existing robust loaders
-        # Note: We use 'load_data_for_seed' to ensure columns are named correctly
-        X_test, _ = load_data_for_seed(RESULTS_ROOT, seed, 'test')
+        # --- 2. PASSED tech_names HERE TO RESTORE COLUMNS ---
+        X_test, _ = load_data_for_seed(RESULTS_ROOT, seed, 'test', feature_names=tech_names)
         model_path = RESULTS_ROOT / f"Results_{seed}/Results/Final_Results/Test_Results/{model_name}_final_model.pkl"
         
         if X_test is None or not model_path.exists(): continue

@@ -51,6 +51,8 @@ def generate_comparison_figure(df,
                                header_fontsize=18,  # Subtitle font size
                                ylabel_fontsize=16,  # Y-axis label font size
                                tick_fontsize=17,
+                               output_dir=None,
+                               save_=True,
                                show=True):
     
     # Ensure a clean aesthetic
@@ -123,6 +125,10 @@ def generate_comparison_figure(df,
     fig.legend(handles=[h_alpha, h_beta], loc='lower center', ncol=2, 
                bbox_to_anchor=(0.5, 0.02), fontsize=header_fontsize, frameon=False)
 
+    if save_:
+        output_dir.mkdir(parents=True,exist_ok=True)
+        plt.savefig(output_dir / "Intra-Dataset_Performances_Analysis", dpi=IMAGE_DPI, bbox_inches='tight')
+        print(f"Figure saved at {output_dir / "Intra-Dataset_Performances_Analysis"}")
     if show: plt.show()
 
 def generate_journal_style_table(ax, cell_text, col_labels, font_size, col_widths):

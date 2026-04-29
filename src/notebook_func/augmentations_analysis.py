@@ -42,7 +42,7 @@ def run_augmentation_regime_analysis(
         n_samples = len(image_df)
     sample_df = image_df.sample(n_samples, random_state=42)
 
-    # 2. Generating Image Configurations [cite: 563]
+    # 2. Generating Image Configurations
     data_for_extraction = []
     for image_id, row in tqdm(sample_df.iterrows(), total=n_samples, desc="Rotating Images"):
         for angle in angles:
@@ -53,7 +53,7 @@ def run_augmentation_regime_analysis(
 
     extraction_input_df = pd.DataFrame(data_for_extraction).set_index(['image_id', 'angle'])
 
-    # 3. Feature Extraction [cite: 564]
+    # 3. Feature Extraction
     all_features_df = extract_feats(extraction_input_df[['image', 'label']], n_jobs=-1, verbosity=0)
     
     # Apply Technical Naming
@@ -78,7 +78,7 @@ def run_augmentation_regime_analysis(
             if angle != 0:
                 rel_diff_vectors.append(np.abs(orig_vec.flatten() - rot_vec.flatten()) / (np.abs(orig_vec.flatten()) + EPSILON))
 
-    # 5. Visualization [cite: 568, 569]
+    # 5. Visualization
     fig = plt.figure(figsize=(12, 10))
     gs = gridspec.GridSpec(2, 1, height_ratios=[1.2, 1], hspace=0.4)
     
@@ -90,7 +90,7 @@ def run_augmentation_regime_analysis(
     ax1.set_ylabel("Cosine Distance\n(1 - Similarity)")
     ax1.xaxis.set_major_locator(MultipleLocator(30))
 
-    # Panel B: Top Affected Features [cite: 567, 570]
+    # Panel B: Top Affected Features 
     ax2 = fig.add_subplot(gs[1])
     rel_df = pd.DataFrame(np.vstack(rel_diff_vectors), columns=feature_cols)
     long_df = rel_df.melt(var_name='Technical Name', value_name='Error')
@@ -105,6 +105,8 @@ def run_augmentation_regime_analysis(
     if save:
         output_dir.mkdir(parents=True, exist_ok=True)
         plt.savefig(output_dir / "Rotation_Stability_Analysis.png", dpi=IMAGE_DPI, bbox_inches='tight')
+        print(f"Figure saved at {output_dir / "Rotation_Stability_Analysis.png"}")
     
-    if show: plt.show()
+    if show: 
+        plt.show()
     plt.close()
