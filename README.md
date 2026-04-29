@@ -60,14 +60,32 @@ The codebase is strictly separated into frontend execution (Jupyter Notebooks) a
 ├── requirements.txt
 └── smart_tree_creator.py
 ```
+## 📦 Data & Model Availability
+To keep this repository lightweight, the raw image data and pre-trained model assets are hosted on Zenodo.
+1. Download the Data: Visit our Zenodo repository [INSERT LINK/DOI HERE] and download the following archives:
+  numpy_images.zip: The raw islet cell autofluorescence images.
+  trained_engines.zip: The pre-trained model weights and scalers.
+  experimental_results.zip: (Optional) The full results output for verification.
+2. Linking to the Code: Once downloaded, extract the files into the following directories:
+``` text
+📁 Autofluorescence-islet-identity/
+├── data/
+│   └── input/
+│       └── numpy files/       <-- Extract 'numpy_images.zip' here
+├── Engines/                   <-- Extract 'trained_engines.zip' here
+└── Dataset++/                 <-- Extract 'experimental_results.zip' here (optional)
+```
 
-## 🚀 Installation & Setup
+🛠️ Installation & Execution
 **1. Clone the repository:**
+
 ```text
 git clone [https://github.com/ivano-squiccimarro/Autofluorescence-intensity-patterns-encode-cell-identity-in-human-islets.git](https://github.com/ivano-squiccimarro/Autofluorescence-intensity-patterns-encode-cell-identity-in-human-islets.git)
 cd Autofluorescence-intensity-patterns-encode-cell-identity-in-human-islets
 ```
 **2. Create a virtual environment:**
+1. Environment Setup
+We recommend using a virtual environment to avoid dependency conflicts:
 ```text
 python -m venv venv
 .\venv\Scripts\Activate.ps1
@@ -78,14 +96,12 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process
 pip install -r requirements.txt
 ```
 
-
 ## 🚀Reproducing Experimental Results
 **1. Main Experiment**
 To replicate the main experiment results, execute the pipeline as configured:
 ```text
 python main.py
 ```
-
 **2. S2.5: Importance of Augmentation Regime**
 To replicate the control experiments proving the necessity of rotation-based augmentation:
   1. Open config/pipeline_configurations.py and set:
@@ -130,4 +146,6 @@ Here the logic table of the Experiments:
 
 ## 📊 Running the Analysis 
 The analysis is driven by the Jupyter Notebook in /notebooks. Simply launch Jupyter and run the cells sequentially. All heavy statistical processing, caching of SHAP values, and Nature-style rendering are handled automatically by the modular backend in /src/notebook_func/.
+
+
 
