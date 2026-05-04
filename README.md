@@ -61,19 +61,28 @@ The codebase is strictly separated into frontend execution (Jupyter Notebooks) a
 └── smart_tree_creator.py
 ```
 ## 📦 Data & Model Availability
-To keep this repository lightweight, the raw image data and pre-trained model assets are hosted on Zenodo.
-1. Download the Data: Visit our Zenodo repository [INSERT LINK/DOI HERE] and download the following archives:
-  numpy_images.zip: The raw islet cell autofluorescence images.
-  trained_engines.zip: The pre-trained model weights and scalers.
+To keep this repository lightweight, the raw image data and pre-trained model assets are hosted on FigShare.
+1. Download the Data: Visit our FigShare repository https://figshare.com/s/c48c88d2e769ab074ad4 with DOI: 10.6084/m9.figshare.32125987 and download the following archives:
+  numpy images.zip: The raw islet cell autofluorescence images.
+Experimental results for each section discussed in the main article are available in the corresponding archives named ^Dataset.*\.zip$. Each archive contains per-seed subdirectories including 'Datasets' and 'Results' folders. The final trained models can be found specifically within the 'Test_Result' directory."
+  for trained_engines.zip: The pre-trained model weights and scalers.
   experimental_results.zip: (Optional) The full results output for verification.
-2. Linking to the Code: Once downloaded, extract the files into the following directories:
+
+Due to the substantial file size of the trained models, the inference engines are not hosted directly on Figshare. Instead, they can be programmatically reconstructed using the reserved section within the main Analysis_of Results_and_Graph_and_Tables_Generator provided in the GitHub repository. This ensures full transparency of the model architecture and training parameters.
+
+3. Linking to the Code: Once downloaded, extract the files into the following directories:
 ``` text
 📁 Autofluorescence-islet-identity/
 ├── data/
 │   └── input/
 │       └── numpy files/       <-- Extract 'numpy_images.zip' here
 ├── Engines/                   <-- Extract 'trained_engines.zip' here
+# A ResultsFolder Structure Example
 └── Dataset++/                 <-- Extract 'experimental_results.zip' here (optional)
+      └── Results_0
+            └── Results
+                  └── Final_Results
+                        └── Test_Results <-- Here the trained models
 ```
 
 ## 🛠️ Installation & Execution
